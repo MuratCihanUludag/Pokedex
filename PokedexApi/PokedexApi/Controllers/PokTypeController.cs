@@ -14,16 +14,16 @@ namespace PokedexApi.Controllers
             _context = context;
         }
         [HttpGet]
-        public IActionResult GetPokType()
+        public IActionResult GetPokTypeList()
         {
-            var pokType = _context.PokemonTypes.OrderBy(type => type.id)
+            var pokTypeList = _context.PokemonTypes.OrderBy(type => type.id)
                 .Select(type => new
                 {
                     type.id,
                     type.Name
                 })
                 .ToList();
-            return Ok(pokType);
+            return Ok(pokTypeList);
         }
         [HttpPost]
         public IActionResult CreatePokType([FromBody] PokemonTypeViewModel model)
@@ -31,7 +31,7 @@ namespace PokedexApi.Controllers
             var createPokType = _context.PokemonTypes.SingleOrDefault(type => type.Name == model.Name);
             if (createPokType is not null)
             {
-                throw new InvalidOperationException("Pokémon with the same name");
+                throw new InvalidOperationException("There is a Pokemen type with this name");
             }
             createPokType = new Model.PokemonType
             {
