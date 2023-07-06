@@ -41,6 +41,30 @@ namespace PokedexApi.Controllers
             _context.SaveChanges();
             return Ok();
         }
-
+        [HttpPut("id")]
+        public IActionResult UpdatePokType([FromBody] PokemonTypeViewModel model, int id)
+        {
+            var updatePokType = _context.PokemonTypes.SingleOrDefault(type => type.id == id);
+            if (updatePokType is null)
+            {
+                throw new InvalidOperationException("Pokemon type not found");
+            }
+            updatePokType.Name = model.Name;
+            _context.PokemonTypes.Update(updatePokType);
+            _context.SaveChanges();
+            return Ok();
+        }
+        [HttpDelete("id")]
+        public IActionResult DeletePokType(int id)
+        {
+            var deletePokType = _context.PokemonTypes.Single(type => type.id == id);
+            if (deletePokType is null)
+            {
+                throw new InvalidOperationException("Pokemon type not found");
+            }
+            _context.PokemonTypes.Remove(deletePokType);
+            _context.SaveChanges();
+            return Ok();
+        }
     }
 }
