@@ -1,4 +1,7 @@
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.OpenApi.Models;
+using PokedexApi.Context;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +13,9 @@ builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "Pokedex", Version = "v1" });
 });
+string connectionString = builder.Configuration.GetConnectionString("PokedexConnection");
+
+builder.Services.AddDbContext<PokemonDbContext>(options => options.UseSqlServer(connectionString));
 
 var app = builder.Build();
 

@@ -11,5 +11,6 @@ namespace PokedexApi.Model
         public ICollection<PokemonType> PokemonTypes { get; set; }
         public ICollection<PokemonWeakness> pokemonWeaknesses { get; set; }
 
+
     }
 }
