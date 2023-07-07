@@ -1,6 +1,6 @@
 ﻿namespace PokedexApi.ViewModel
 {
-    public class PokemonWeaknessViewModel
+    public class PokemonWeaknessDTO
     {
         public string Name { get; set; }
     }

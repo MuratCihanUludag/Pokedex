@@ -1,6 +1,6 @@
 ﻿namespace PokedexApi.ViewModel
 {
-    public class PokemonStatViewModel
+    public class PokemonStatDTO
     {
         public int Hp { get; set; }
         public int Attack { get; set; }

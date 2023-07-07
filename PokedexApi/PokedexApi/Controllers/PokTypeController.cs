@@ -26,7 +26,7 @@ namespace PokedexApi.Controllers
             return Ok(pokTypeList);
         }
         [HttpPost]
-        public IActionResult CreatePokType([FromBody] PokemonTypeViewModel model)
+        public IActionResult CreatePokType([FromBody] PokemonTypeDTO model)
         {
             var createPokType = _context.PokemonTypes.SingleOrDefault(type => type.Name == model.Name);
             if (createPokType is not null)
@@ -42,7 +42,7 @@ namespace PokedexApi.Controllers
             return Ok();
         }
         [HttpPut("id")]
-        public IActionResult UpdatePokType([FromBody] PokemonTypeViewModel model, int id)
+        public IActionResult UpdatePokType([FromBody] PokemonTypeDTO model, int id)
         {
             var updatePokType = _context.PokemonTypes.SingleOrDefault(type => type.id == id);
             if (updatePokType is null)

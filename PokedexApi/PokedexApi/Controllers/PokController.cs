@@ -1,16 +1,17 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PokedexApi.Context;
+using PokedexApi.Model;
 using PokedexApi.ViewModel;
 
 namespace PokedexApi.Controllers
 {
     [ApiController]
-    [Route("[controller]s")]
-    public class PokController : Controller
+    [Route("api/[controller]")]
+    public class PokemonsController : ControllerBase
     {
         private readonly PokemonDbContext _context;
-        public PokController(PokemonDbContext context)
+        public PokemonsController(PokemonDbContext context)
         {
             _context = context;
         }
@@ -27,37 +28,37 @@ namespace PokedexApi.Controllers
                     select.Name,
                     select.Description,
                     select.Category,
-                    Type = _context.PokemonTypes.Select(type => type.Name).ToList(),
-                    Weakness = _context.PokemonWeaknesses.Select(weak => weak.Name).ToList(),
-                    Stats = _context.PokemonStats.Select(stat => new
+                    Type = select.PokemonTypes.Select(type => type.Name).ToList(),
+                    Weakness = select.pokemonWeaknesses.Select(weak => weak.Name).ToList(),
+                    Stats = new
                     {
-                        stat.Hp,
-                        stat.Attack,
-                        stat.Defense,
-                        stat.SpecialAttack,
-                        stat.SpecialDefense,
-                        stat.Speed
-                    })
+                        select.PokemonStats.Hp,
+                        select.PokemonStats.Attack,
+                        select.PokemonStats.Defense,
+                        select.PokemonStats.SpecialAttack,
+                        select.PokemonStats.SpecialDefense,
+                        select.PokemonStats.Speed
+                    }
                 })
                 .ToList();
             return Ok(pokemonList);
         }
         [HttpPost]
-        public IActionResult CreatePokemon([FromBody] PokemonViewModel model)
+        public IActionResult CreatePokemon([FromBody] PokemonDTO model)
         {
             var createPokemon = _context.Pokemons.SingleOrDefault(pokemon => pokemon.Name == model.Name);
             if (createPokemon is not null)
             {
                 throw new InvalidOperationException("There is a Pokemen with this name");
             }
-            createPokemon = new Model.Pokemon
+            createPokemon = new Pokemon
             {
                 Name = model.Name,
                 Description = model.Description,
                 Category = model.Category,
                 PokemonTypes = _context.PokemonTypes.Where(type => model.PokemonTypesId.Contains(type.id)).ToList(),
                 pokemonWeaknesses = _context.PokemonWeaknesses.Where(type => model.pokemonWeaknessesId.Contains(type.id)).ToList(),
-                PokemonStats =
+                PokemonStats = new PokemonStat
                 {
                     Hp = model.PokemonStats.Hp,
                     Attack = model.PokemonStats.Attack,
@@ -74,19 +75,22 @@ namespace PokedexApi.Controllers
         [HttpGet("id")]
         public IActionResult GetPokemon(int id)
         {
-            var pok = _context.Pokemons
-                .Include(type => type.PokemonTypes)
-                .Include(weak => weak.pokemonWeaknesses)
-                .Include(stat => stat.PokemonStats)
+            var pokemon = _context.Pokemons
+                .Include(pokemon => pokemon.PokemonTypes)
+                .Include(pokemon => pokemon.pokemonWeaknesses)
+                .Include(pokemon => pokemon.PokemonStats)
                 .FirstOrDefault(pokemon => pokemon.id == id);
-            if (pok == null)
+
+            if (pokemon == null)
             {
-                throw new InvalidOperationException("Pokemon is not found");
+                throw new InvalidOperationException("Pokemon not found.");
             }
-            return Ok(pok);
+
+            return Ok(pokemon);
+
         }
         [HttpPut("id")]
-        public IActionResult UpdatePokemon([FromBody] PokemonViewModel model, int id)
+        public IActionResult UpdatePokemon([FromBody] PokemonDTO model, int id)
         {
             var updatePok = _context.Pokemons
                 .Include(type => type.PokemonTypes)

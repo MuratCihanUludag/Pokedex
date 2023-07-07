@@ -26,7 +26,7 @@ namespace PokedexApi.Controllers
             return Ok(pokWeaknessList);
         }
         [HttpPost]
-        public IActionResult CreatePokWeakness([FromBody] PokemonWeaknessViewModel model)
+        public IActionResult CreatePokWeakness([FromBody] PokemonWeaknessDTO model)
         {
             var createPokWeakness = _context.PokemonWeaknesses.SingleOrDefault(weak => weak.Name == model.Name);
             if (createPokWeakness is not null)
@@ -42,7 +42,7 @@ namespace PokedexApi.Controllers
             return Ok();
         }
         [HttpPut("id")]
-        public IActionResult UpdatePokWeakness([FromBody] PokemonWeaknessViewModel model, int id)
+        public IActionResult UpdatePokWeakness([FromBody] PokemonWeaknessDTO model, int id)
         {
             var updatePokWeakness = _context.PokemonWeaknesses.SingleOrDefault(weak => weak.id == id);
             if (updatePokWeakness is null)
