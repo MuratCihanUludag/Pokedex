@@ -111,6 +111,18 @@ namespace PokedexApi.Controllers
             _context.SaveChanges();
             return Ok();
         }
+        [HttpDelete("id")]
+        public IActionResult DeletePokemon(int id)
+        {
+            var deletePok = _context.Pokemons.SingleOrDefault(pok => pok.id == id);
+            if (deletePok is null)
+            {
+                throw new InvalidOperationException("Pokemon is not found");
+            }
+            _context.Pokemons.Remove(deletePok);
+            _context.SaveChanges();
+            return Ok();
+        }
 
     }
 }
