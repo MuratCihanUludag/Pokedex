@@ -75,10 +75,29 @@ namespace PokedexApi.Controllers
         [HttpGet("id")]
         public IActionResult GetPokemon(int id)
         {
+
             var pokemon = _context.Pokemons
-                .Include(pokemon => pokemon.PokemonTypes)
-                .Include(pokemon => pokemon.pokemonWeaknesses)
-                .Include(pokemon => pokemon.PokemonStats)
+                .Include(type => type.PokemonTypes)
+                .Include(weak => weak.pokemonWeaknesses)
+                .Include(stat => stat.PokemonStats)
+                .Select(select => new
+                {
+                    select.id,
+                    select.Name,
+                    select.Description,
+                    select.Category,
+                    Type = select.PokemonTypes.Select(x => x.Name).ToList(),
+                    Weakness = select.pokemonWeaknesses.Select(x => x.Name).ToList(),
+                    Stats = new
+                    {
+                        select.PokemonStats.Hp,
+                        select.PokemonStats.Attack,
+                        select.PokemonStats.Defense,
+                        select.PokemonStats.SpecialAttack,
+                        select.PokemonStats.SpecialDefense,
+                        select.PokemonStats.Speed
+                    }
+                })
                 .FirstOrDefault(pokemon => pokemon.id == id);
 
             if (pokemon == null)
