@@ -85,5 +85,32 @@ namespace PokedexApi.Controllers
             }
             return Ok(pok);
         }
+        [HttpPut("id")]
+        public IActionResult UpdatePokemon([FromBody] PokemonViewModel model, int id)
+        {
+            var updatePok = _context.Pokemons
+                .Include(type => type.PokemonTypes)
+                .Include(weak => weak.pokemonWeaknesses)
+                .SingleOrDefault(pok => pok.id == id);
+            if (updatePok is null)
+            {
+                throw new InvalidOperationException("Pokemon is not found");
+            }
+            updatePok.Name = model.Name;
+            updatePok.Description = model.Description;
+            updatePok.Category = model.Category;
+            updatePok.PokemonTypes = _context.PokemonTypes.Where(type => model.PokemonTypesId.Contains(type.id)).ToList();
+            updatePok.pokemonWeaknesses = _context.PokemonWeaknesses.Where(weak => model.pokemonWeaknessesId.Contains(weak.id)).ToList();
+            updatePok.PokemonStats.Hp = model.PokemonStats.Hp;
+            updatePok.PokemonStats.Attack = model.PokemonStats.Attack;
+            updatePok.PokemonStats.Defense = model.PokemonStats.Defense;
+            updatePok.PokemonStats.SpecialAttack = model.PokemonStats.SpecialAttack;
+            updatePok.PokemonStats.SpecialDefense = model.PokemonStats.SpecialDefense;
+            updatePok.PokemonStats.Speed = model.PokemonStats.Speed;
+            _context.Pokemons.Update(updatePok);
+            _context.SaveChanges();
+            return Ok();
+        }
+
     }
 }
