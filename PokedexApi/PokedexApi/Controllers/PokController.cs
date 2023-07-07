@@ -57,12 +57,33 @@ namespace PokedexApi.Controllers
                 Category = model.Category,
                 PokemonTypes = _context.PokemonTypes.Where(type => model.PokemonTypesId.Contains(type.id)).ToList(),
                 pokemonWeaknesses = _context.PokemonWeaknesses.Where(type => model.pokemonWeaknessesId.Contains(type.id)).ToList(),
-                PokemonStats = model.PokemonStats
+                PokemonStats =
+                {
+                    Hp = model.PokemonStats.Hp,
+                    Attack = model.PokemonStats.Attack,
+                    Defense = model.PokemonStats.Defense,
+                    SpecialAttack = model.PokemonStats.SpecialAttack,
+                    SpecialDefense = model.PokemonStats.SpecialDefense,
+                    Speed = model.PokemonStats.Speed,
+                }
             };
             _context.Pokemons.Add(createPokemon);
             _context.SaveChanges();
             return Ok();
         }
-
+        [HttpGet("id")]
+        public IActionResult GetPokemon(int id)
+        {
+            var pok = _context.Pokemons
+                .Include(type => type.PokemonTypes)
+                .Include(weak => weak.pokemonWeaknesses)
+                .Include(stat => stat.PokemonStats)
+                .FirstOrDefault(pokemon => pokemon.id == id);
+            if (pok == null)
+            {
+                throw new InvalidOperationException("Pokemon is not found");
+            }
+            return Ok(pok);
+        }
     }
 }
