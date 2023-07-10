@@ -32,23 +32,77 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  z-index: 3;
 }
-.pokeball-icon {
 
+.pokeball-icon {
   animation: pokeball-icon 3s linear forwards;
   opacity: 1;
   pointer-events: none;
 }
+
 @keyframes pokeball-icon {
   0% {
     transform: rotate(0deg);
     opacity: 1;
   }
+  50% {
+    transform: rotate(360deg);
+  }
   90% {
     opacity: 1;
   }
   100% {
-    transform: rotate(360deg);
+    transform: rotate(720deg);
     opacity: 0;
   }
+}
+
+.login-form {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 0;
+  opacity: 0;
+}
+
+.card {
+  width: 40vw;
+  height: 200px;
+  background-color: #e7e7e7;
+  box-shadow: 5px 5px 26px -7px rgba(125, 122, 122, 0.75);
+}
+.card-title {
+  padding: 1rem 4rem;
+  font-size: 24px;
+  font-family: var(--proxima-nova);
+  font-weight: 700;
+  font-style: italic;
+}
+.form-group {
+  width: 100%;
+  text-align: center;
+  position: relative;
+  margin: 0.5rem 0;
+  font-family: var(--proxima-nova);
+  font-weight: 400;
+}
+.form-group input {
+  width: 65%;
+  border: 0;
+  border-bottom: 1px solid rgb(85, 84, 84);
+  padding: 0.45rem 1rem;
+  background-color: transparent;
+  outline: none;
+}
+.float-right {
+  float: right;
+}
+.btn {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  padding: 0.45rem 2rem !important;
+  margin: 1rem;
 }
