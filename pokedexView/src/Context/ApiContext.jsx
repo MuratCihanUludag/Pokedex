@@ -1,18 +1,20 @@
 import { createContext, useEffect, useState } from "react";
-
+import PokemonApi from "../Api/PokemonApi";
 import axios from "axios";
 const ApiContex = createContext();
 export const ApiContexProvider = ({ children }) => {
+  const { pokemonApi } = PokemonApi();
   const api = axios.create();
   const [pokemons, setPokemons] = useState(null);
-  const GetPokemon = () => {
-    api.get("https://localhost:7033/api/Pokemons").then((res) => {
-      setPokemons(res.data);
-    });
+  const [postPokemon, setPostPokemon] = useState(null);
+
+  const fillContext = () => {
+    pokemonApi.GetPokemon(setPokemons);
   };
+
   useEffect(() => {
-    GetPokemon();
-  },[]);
+    fillContext();
+  }, []);
   const values = {
     pokemons,
   };

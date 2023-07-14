@@ -212,29 +212,34 @@ a {
   grid-template-columns: repeat(4, 1fr);
   gap: 1rem;
 }
-.pokedex-card p
- {
+.pokedex-card p {
   color: #6f6e6e;
   font-weight: 100;
   padding-left: 15px;
 }
-.pokedex-card h3{
-  
+.pokedex-card h3 {
+  padding-left: 15px;
 }
-.pokemon-type span {
-  display: inline-flex;
+.pokemon-type {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+.pokemon-type p {
+  padding: 0;
+  text-align: center;
+  border-radius: 5px;
   width: 75px;
-  justify-content: center;
-  margin-right: 0.25rem;
   margin-top: 0.24rem;
+  margin-left: 15px;
+  margin-bottom: 10%;
   font-size: 12px;
   font-weight: 600;
 }
-.pokemon-type span.Grass {
+.pokemon-type p.Grass {
   background-color: #9bcc50;
   color: #6f6e6e;
 }
-.pokemon-type span.Poison {
+.pokemon-type p.Poison {
   background-color: #b97fc9;
   color: white;
 }

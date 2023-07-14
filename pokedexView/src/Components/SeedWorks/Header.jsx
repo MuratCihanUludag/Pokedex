@@ -1,17 +1,21 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 
 function Header() {
   return (
     <header className="header">
       <ul className="flex">
         <li>
-          <p>Home</p>
+          <NavLink>Home</NavLink>
         </li>
         <li>
-          <p>Pokedex</p>
+          <NavLink>Pokedex</NavLink>
         </li>
         <li>
-          <p>Trading Card</p>
+          <NavLink>Trading Card</NavLink>
+        </li>
+        <li>
+          <NavLink to={"/create/pokemon"}>Create Pokemon</NavLink>
         </li>
       </ul>
     </header>

@@ -24,4 +24,9 @@ li {
   width: 300px;
   margin: auto;
 }
-p{margin: 0;}
+p{
+  margin: 0;
+}
+a{
+  color:#37474f;
+}
