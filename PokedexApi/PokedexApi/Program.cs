@@ -16,6 +16,11 @@ builder.Services.AddSwaggerGen(c =>
 string connectionString = builder.Configuration.GetConnectionString("PokedexConnection");
 
 builder.Services.AddDbContext<PokemonDbContext>(options => options.UseSqlServer(connectionString));
+builder.Services.AddCors(options => options.AddPolicy("AllowSpecificOrigin", policy =>
+{
+    policy.WithOrigins("http://localhost:5173").AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+
+}));
 
 var app = builder.Build();
 
@@ -24,6 +29,8 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 
 app.UseHttpsRedirection();
+app.UseCors("AllowSpecificOrigin");
+
 app.UseSwagger();
 app.UseSwaggerUI(c =>
 {

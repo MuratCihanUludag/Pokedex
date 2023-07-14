@@ -28,8 +28,8 @@ namespace PokedexApi.Controllers
                     select.Name,
                     select.Description,
                     select.Category,
-                    Type = select.PokemonTypes.Select(type => type.Name).ToList(),
-                    Weakness = select.pokemonWeaknesses.Select(weak => weak.Name).ToList(),
+                    Type = select.PokemonTypes.Select(type => new { type.Name }).ToList(),
+                    Weakness = select.pokemonWeaknesses.Select(weak => new { weak.Name }).ToList(),
                     Stats = new
                     {
                         select.PokemonStats.Hp,

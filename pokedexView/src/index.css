@@ -14,6 +14,14 @@ h6 {
 }
 
 body {
-  font-family: var( --proxima-nova);
+  font-family: var(--proxima-nova);
   font-style: normal;
+  margin: 0;
 }
+li {
+  text-decoration: none;
+  list-style: none;
+  width: 300px;
+  margin: auto;
+}
+p{margin: 0;}

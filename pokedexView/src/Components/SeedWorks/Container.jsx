@@ -4,8 +4,9 @@ import { Route, Routes } from "react-router-dom";
 import Login from "../../Pages/Login";
 import Registration from "../../Pages/Registration ";
 import Header from "./Header";
+import { ApiContexProvider } from "../../Context/ApiContext";
 function Container() {
-  const permissionId = null;
+  const permissionId = 1;
   if (permissionId === null) {
     return (
       <Routes>
@@ -16,12 +17,14 @@ function Container() {
   }
   if (permissionId === 1){
     return (
-      <div className="main" >
-        <Header/>
-        <Routes>
-          <Route path="/" element={<Pokedex />} />
-        </Routes>
-      </div>
+      <ApiContexProvider>
+        <div className="main" >
+          <Header/>
+          <Routes>
+            <Route path="/" element={<Pokedex />} />
+          </Routes>
+        </div>
+      </ApiContexProvider>
     );
   }
     

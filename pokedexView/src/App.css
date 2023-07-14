@@ -150,8 +150,6 @@
   transform: scale(1.05);
 }
 
-
-
 .card-header {
   display: flex;
   align-items: center;
@@ -181,4 +179,62 @@ a {
 .create-account-form .form-group input {
   width: 45% !important;
   margin: auto;
+}
+.main {
+  background-color: #2c2c2c;
+  min-height: calc(100vh - 48px);
+}
+.header {
+  background-color: #ffd740;
+  position: fixed;
+  width: 100%;
+  height: 50px;
+  left: 0;
+  top: 0;
+}
+.section {
+  width: 1280px;
+  margin: 3rem auto;
+  background-color: #f2f2f2;
+  padding: 10px;
+  color: #333333;
+}
+.flex {
+  display: flex;
+}
+.pokedex-card {
+  border: 1px solid rgb(176, 170, 170);
+  width: 250px;
+  border-radius: 5px;
+}
+.pokedex-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+}
+.pokedex-card p
+ {
+  color: #6f6e6e;
+  font-weight: 100;
+  padding-left: 15px;
+}
+.pokedex-card h3{
+  
+}
+.pokemon-type span {
+  display: inline-flex;
+  width: 75px;
+  justify-content: center;
+  margin-right: 0.25rem;
+  margin-top: 0.24rem;
+  font-size: 12px;
+  font-weight: 600;
+}
+.pokemon-type span.Grass {
+  background-color: #9bcc50;
+  color: #6f6e6e;
+}
+.pokemon-type span.Poison {
+  background-color: #b97fc9;
+  color: white;
 }
