@@ -12,3 +12,8 @@ h6 {
   margin: 0;
   padding: 0;
 }
+
+body {
+  font-family: var( --proxima-nova);
+  font-style: normal;
+}
